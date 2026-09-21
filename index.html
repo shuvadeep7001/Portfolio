@@ -1,112 +1,86 @@
-#include <iostream>
-#include <vector>
-#include <string>
-
-using namespace std;
-
-struct Student {
-    int rollNumber;
-    string name;
-    float marks1, marks2, marks3;
-    float total;
-    float percentage;
-    char grade;
-};
-
-// Function to calculate Grade based on percentage
-char calculateGrade(float percentage) {
-    if (percentage >= 90) return 'A';
-    else if (percentage >= 75) return 'B';
-    else if (percentage >= 60) return 'C';
-    else if (percentage >= 40) return 'D';
-    else return 'F';
-}
-
-int main() {
-    vector<Student> students;
-    int choice;
-
-    while (true) {
-        cout << "\n==========================================";
-        cout << "\n  STUDENT GRADE MANAGEMENT SYSTEM";
-        cout << "\n==========================================";
-        cout << "\n1. Add New Student Record";
-        cout << "\n2. Display All Student Records";
-        cout << "\n3. Search Student by Roll Number";
-        cout << "\n4. Exit";
-        cout << "\nEnter your choice (1-4): ";
-        cin >> choice;
-
-        if (choice == 1) {
-            Student s;
-            cout << "\nEnter Roll Number: ";
-            cin >> s.rollNumber;
-            cin.ignore(); // buffer clear karne ke liye
-
-            cout << "Enter Student Name: ";
-            getline(cin, s.name);
-
-            cout << "Enter Marks for Subject 1 (out of 100): ";
-            cin >> s.marks1;
-            cout << "Enter Marks for Subject 2 (out of 100): ";
-            cin >> s.marks2;
-            cout << "Enter Marks for Subject 3 (out of 100): ";
-            cin >> s.marks3;
-
-            s.total = s.marks1 + s.marks2 + s.marks3;
-            s.percentage = (s.total / 300.0) * 100;
-            s.grade = calculateGrade(s.percentage);
-
-            students.push_back(s);
-            cout << "\n[Success] Record added successfully!\n";
-
-        } else if (choice == 2) {
-            if (students.empty()) {
-                cout << "\n[Notice] No records found to display.\n";
-            } else {
-                cout << "\n-------------------------------------------------------------";
-                cout << "\nRoll No | Name\t\t| Total | Percentage | Grade";
-                cout << "\n-------------------------------------------------------------";
-                for (const auto& s : students) {
-                    cout << "\n" << s.rollNumber << "\t| " << s.name << "\t| " 
-                         << s.total << "\t| " << s.percentage << "%\t     | " << s.grade;
-                }
-                cout << "\n-------------------------------------------------------------\n";
-            }
-
-        } else if (choice == 3) {
-            if (students.empty()) {
-                cout << "\n[Notice] No records found.\n";
-            } else {
-                int searchRoll;
-                bool found = false;
-                cout << "\nEnter Roll Number to search: ";
-                cin >> searchRoll;
-
-                for (const auto& s : students) {
-                    if (s.rollNumber == searchRoll) {
-                        cout << "\n--- Student Details ---";
-                        cout << "\nRoll Number : " << s.rollNumber;
-                        cout << "\nName        : " << s.name;
-                        cout << "\nTotal Marks : " << s.total << " / 300";
-                        cout << "\nPercentage  : " << s.percentage << "%";
-                        cout << "\nGrade       : " << s.grade << "\n";
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    cout << "\n[Error] Student with Roll Number " << searchRoll << " not found.\n";
-                }
-            }
-
-        } else if (choice == 4) {
-            cout << "\nExiting system. Have a great day!\n";
-            break;
-        } else {
-            cout << "\n[Invalid] Invalid choice! Please enter a number between 1 and 4.\n";
-        }
-    }
-
-    return 0;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shuvadeep Lo | Portfolio</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; line-height: 1.6; }
+        nav { background-color: #1e293b; color: #ffffff; display: flex; justify-content: space-between; align-items: center; padding: 1rem 10%; position: sticky; top: 0; z-index: 100; }
+        nav .logo { font-size: 1.3rem; font-weight: bold; }
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 20px; }
+        nav ul li a { color: #cbd5e1; text-decoration: none; font-size: 0.95rem; }
+        .hero { background: linear-gradient(135deg, #1e293b, #0f172a); color: white; text-align: center; padding: 4rem 1rem; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .hero p { font-size: 1.1rem; color: #94a3b8; max-width: 600px; margin: 0 auto; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
+        .card { background: white; padding: 2rem; margin-bottom: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .card h2 { color: #1e293b; border-bottom: 2px solid #38bdf8; padding-bottom: 0.5rem; margin-bottom: 1.2rem; font-size: 1.4rem; }
+        .skills-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill-tag { background-color: #e2e8f0; color: #334155; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.9rem; font-weight: 500; }
+        .project-item { margin-bottom: 1.5rem; border-left: 4px solid #38bdf8; padding-left: 1.2rem; }
+        .project-item h3 { color: #0f172a; font-size: 1.15rem; margin-bottom: 0.3rem; }
+        .project-item p { margin-bottom: 0.6rem; color: #475569; }
+        .btn-link { display: inline-block; background-color: #0284c7; color: white !important; padding: 0.4rem 0.9rem; border-radius: 5px; text-decoration: none; font-size: 0.85rem; font-weight: 500; margin-top: 5px; }
+        .contact-info p { margin: 0.5rem 0; font-size: 1rem; }
+        .contact-info a { color: #0284c7; text-decoration: none; }
+        footer { text-align: center; padding: 1.5rem; background-color: #1e293b; color: #94a3b8; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Shuvadeep Lo</div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <header class="hero">
+        <h1>Hi, I'm Shuvadeep Lo</h1>
+        <p>BCA Student & Aspiring Software Developer passionate about programming, database management, and problem solving.</p>
+    </header>
+    <div class="container">
+        <section id="about" class="card">
+            <h2>About Me</h2>
+            <p>I am a dedicated Computer Applications student from Asansol, West Bengal. I enjoy building basic software utilities, learning database queries, and exploring front-end web development.</p>
+        </section>
+        <section id="skills" class="card">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <span class="skill-tag">C</span>
+                <span class="skill-tag">C++</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">MS Excel</span>
+                <span class="skill-tag">Data Entry</span>
+            </div>
+        </section>
+        <section id="projects" class="card">
+            <h2>Projects</h2>
+            <div class="project-item">
+                <h3>Student Grade Management System (C++)</h3>
+                <p>A console-based C++ application designed to manage student academic records, calculate percentages, and assign letter grades automatically using structures and vectors.</p>
+                <a href="https://github.com/shuvadeep7001/Student-Grade-Management-System" target="_blank" class="btn-link">View C++ Code on GitHub &rarr;</a>
+            </div>
+            <div class="project-item">
+                <h3>Personal Portfolio Web Page (HTML/CSS)</h3>
+                <p>Designed a clean, responsive single-page portfolio using semantic HTML5 tags and modern CSS styling to showcase educational background and technical projects.</p>
+            </div>
+        </section>
+        <section id="contact" class="card contact-info">
+            <h2>Contact Details</h2>
+            <p><strong>Location:</strong> Asansol, West Bengal, India</p>
+            <p><strong>Email:</strong> <a href="mailto:shuvadeep352@gmail.com">shuvadeep352@gmail.com</a></p>
+            <p><strong>Phone:</strong> +91 7001842593</p>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2026 Shuvadeep Lo. All rights reserved.</p>
+    </footer>
+</body>
+</html>
